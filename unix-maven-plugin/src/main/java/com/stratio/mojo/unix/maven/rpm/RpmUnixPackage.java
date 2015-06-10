@@ -204,8 +204,8 @@ public class RpmUnixPackage
 
         int index = v.indexOf("-");
         if (index != -1 && index < v.length() - 1 && Character.isLetter(v.charAt(index + 1))) {
-            calculatedRevision = "0.1." + v.substring(index + 1).replace("-", "_");
-            v = v.substring(0, index);
+           // calculatedRevision = "0.1." + v.substring(index + 1).replace("-", "_");
+           // v = v.substring(0, index);
         } else if (version.snapshot) {
             calculatedRevision = "0.1." + version.timestamp;
         }
