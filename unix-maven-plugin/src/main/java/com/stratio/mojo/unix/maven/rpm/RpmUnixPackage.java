@@ -200,17 +200,13 @@ public class RpmUnixPackage
     public static P2<String, String> getRpmVersion(PackageVersion version) {
         String v = version.version;
 
-        String calculatedRevision = "";
-        String r = calculatedRevision;
 
-        if (version.snapshot  || version.revision.isNone()){
-            r = "1";
-        } else {
-            r = version.revision.some();
+        if (version.snapshot ){
+            v += "-" + version.timestamp;
         }
 
 
-        return p(v.replace('-', '_'), r);
+        return p(v.replace('-', '_'), "1");
     }
 
     @Override

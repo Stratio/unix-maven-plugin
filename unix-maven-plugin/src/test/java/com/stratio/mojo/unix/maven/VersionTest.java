@@ -52,66 +52,59 @@ public class VersionTest
     public void testSnapshotWithoutRevision()
     {
         verify( packageVersion( "1.2-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
-            deb( "1.2~20090423095107-1" ),
+            deb( "1.2~20090423095107" ),
             pkg( "1.2-20090423095107" ),
-            rpm( "1.2", "1" ) );
+            rpm( "1.2_20090423095107", "1" ) );
     }
 
     public void testSnapshotWithConfiguredRevision()
     {
         verify( packageVersion( "1.2-SNAPSHOT", "20090423095107", true, some( "3" ) ),
-            deb( "1.2~20090423095107-3" ),
+            deb( "1.2~20090423095107" ),
             pkg( "1.2-20090423095107-3" ),
-            rpm( "1.2", "1" ) );
+            rpm( "1.2_20090423095107", "1" ) );
     }
 
     public void testSnapshotWithEmbeddedRevision()
     {
         verify( packageVersion( "1.2-3-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
-            deb( "1.2-3~20090423095107-1" ),
+            deb( "1.2-3~20090423095107" ),
             pkg( "1.2-3-20090423095107" ),
-            rpm( "1.2_3", "1" ) );
+            rpm( "1.2_3_20090423095107", "1" ) );
     }
 
     public void testSnapshotWithEmbeddedAndConfiguredRevision()
     {
         verify( packageVersion( "1.2-3-SNAPSHOT", "20090423095107", true, some( "3" ) ),
-            deb( "1.2-3~20090423095107-3" ),
+            deb( "1.2-3~20090423095107" ),
             pkg( "1.2-3-20090423095107-3" ),
-            rpm( "1.2_3", "1" ) );
+            rpm( "1.2_3_20090423095107", "1" ) );
     }
 
     public void testPrereleaseSnapshotWithoutRevision()
     {
         verify( packageVersion( "1.2-rc1-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
-            deb( "1.2~rc1~20090423095107-1" ),
+            deb( "1.2~rc1~20090423095107" ),
             pkg( "1.2-rc1-20090423095107" ),
-            rpm( "1.2_rc1", "1" ) );
+            rpm( "1.2_rc1_20090423095107", "1" ) );
     }
 
     public void testPrereleaseSnapshotWithConfiguredRevision()
     {
         verify( packageVersion( "1.2-rc1-SNAPSHOT", "20090423095107", true, some( "3" ) ),
-            deb( "1.2~rc1~20090423095107-3" ),
+            deb( "1.2~rc1~20090423095107" ),
             pkg( "1.2-rc1-20090423095107-3" ),
-            rpm( "1.2_rc1", "1" ) );
+            rpm( "1.2_rc1_20090423095107", "1" ) );
     }
 
     public void testPrereleaseSnapshotWithEmbeddedRevision()
     {
         verify( packageVersion( "1.2-rc1-3-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
-            deb( "1.2~rc1-3~20090423095107-1" ),
+            deb( "1.2~rc1-3~20090423095107" ),
             pkg( "1.2-rc1-3-20090423095107" ),
-            rpm( "1.2_rc1_3", "1" ) );
+            rpm( "1.2_rc1_3_20090423095107", "1" ) );
     }
 
-    public void testPrereleaseSnapshotWithEmbeddedAndConfiguredRevision()
-    {
-        verify( packageVersion( "1.2-rc1-3-SNAPSHOT", "20090423095107", true, some( "3" ) ),
-            deb( "1.2~rc1-3~20090423095107-3" ),
-            pkg( "1.2-rc1-3-20090423095107-3" ),
-            rpm( "1.2_rc1_3", "1" ) );
-    }
 
     // -----------------------------------------------------------------------
     // Release
@@ -120,7 +113,7 @@ public class VersionTest
     public void testReleaseWithoutRevision()
     {
         verify( packageVersion( "1.2", "20090423095107", false, Option.<String>none() ),
-            deb( "1.2-1" ),
+            deb( "1.2" ),
             pkg( "1.2" ),
             rpm( "1.2", "1" ) );
     }
@@ -128,15 +121,15 @@ public class VersionTest
     public void testReleaseWithConfiguredRevision()
     {
         verify( packageVersion( "1.2", "20090423095107", false, some( "3" ) ),
-            deb( "1.2-3" ),
+            deb( "1.2" ),
             pkg( "1.2-3" ),
-            rpm( "1.2", "3" ) );
+            rpm( "1.2", "1" ) );
     }
 
     public void testReleaseWithEmbeddedRevision()
     {
         verify( packageVersion( "1.2-3", "20090423095107", false, Option.<String>none() ),
-            deb( "1.2-3-1" ),
+            deb( "1.2-3" ),
             pkg( "1.2-3" ),
             rpm( "1.2_3", "1" ) );
     }
@@ -144,15 +137,15 @@ public class VersionTest
     public void testReleaseWithConfiguredAndEmbeddedRevision()
     {
         verify( packageVersion( "1.2-3", "20090423095107", false, some( "3" ) ),
-            deb( "1.2-3-3" ),
+            deb( "1.2-3" ),
             pkg( "1.2-3-3" ),
-            rpm( "1.2_3", "3" ) );
+            rpm( "1.2_3", "1" ) );
     }
 
     public void testPrereleaseWithoutRevision()
     {
         verify( packageVersion( "1.2-rc1", "20090423095107", false, Option.<String>none() ),
-            deb( "1.2~rc1-1" ),
+            deb( "1.2~rc1" ),
             pkg( "1.2-rc1" ),
             rpm( "1.2_rc1", "1" ) );
     }
@@ -160,15 +153,15 @@ public class VersionTest
     public void testPrereleaseWithConfiguredRevision()
     {
         verify( packageVersion( "1.2-rc1", "20090423095107", false, some( "3" ) ),
-            deb( "1.2~rc1-3" ),
+            deb( "1.2~rc1" ),
             pkg( "1.2-rc1-3" ),
-            rpm( "1.2_rc1", "3" ) );
+            rpm( "1.2_rc1", "1" ) );
     }
 
     public void testPrereleaseWithEmbeddedRevision()
     {
         verify( packageVersion( "1.2-rc1-3", "20090423095107", false, Option.<String>none() ),
-            deb( "1.2~rc1-3-1" ),
+            deb( "1.2~rc1-3" ),
             pkg( "1.2-rc1-3" ),
             rpm( "1.2_rc1_3", "1" ) );
     }
@@ -176,9 +169,9 @@ public class VersionTest
     public void testPrereleaseWithConfiguredAndEmbeddedRevision()
     {
         verify( packageVersion( "1.2-rc1-3", "20090423095107", false, some( "3" ) ),
-            deb( "1.2~rc1-3-3" ),
+            deb( "1.2~rc1-3" ),
             pkg( "1.2-rc1-3-3" ),
-            rpm( "1.2_rc1_3", "3" ) );
+            rpm( "1.2_rc1_3", "1" ) );
     }
 
     public static <A> void verify( A a, Verifier<A>... verifiers )

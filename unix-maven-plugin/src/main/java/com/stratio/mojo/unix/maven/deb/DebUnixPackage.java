@@ -291,10 +291,10 @@ public class DebUnixPackage
 
         if ( !version.snapshot )
         {
-            return v + "-" + r;
+            return v;
         }
 
-        return v + "~" + version.timestamp + "-" + r;
+        return v + "~" + version.timestamp;
     }
 
 
