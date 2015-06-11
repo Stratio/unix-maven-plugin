@@ -54,7 +54,7 @@ public class VersionTest
         verify( packageVersion( "1.2-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
             deb( "1.2~20090423095107-1" ),
             pkg( "1.2-20090423095107" ),
-            rpm( "1.2", "0.1.20090423095107" ) );
+            rpm( "1.2", "1" ) );
     }
 
     public void testSnapshotWithConfiguredRevision()
@@ -62,7 +62,7 @@ public class VersionTest
         verify( packageVersion( "1.2-SNAPSHOT", "20090423095107", true, some( "3" ) ),
             deb( "1.2~20090423095107-3" ),
             pkg( "1.2-20090423095107-3" ),
-            rpm( "1.2", "0.1.20090423095107.3" ) );
+            rpm( "1.2", "1" ) );
     }
 
     public void testSnapshotWithEmbeddedRevision()
@@ -70,7 +70,7 @@ public class VersionTest
         verify( packageVersion( "1.2-3-SNAPSHOT", "20090423095107", true, Option.<String>none() ),
             deb( "1.2-3~20090423095107-1" ),
             pkg( "1.2-3-20090423095107" ),
-            rpm( "1.2_3", "0.1.20090423095107" ) );
+            rpm( "1.2_3", "1" ) );
     }
 
     public void testSnapshotWithEmbeddedAndConfiguredRevision()
@@ -78,7 +78,7 @@ public class VersionTest
         verify( packageVersion( "1.2-3-SNAPSHOT", "20090423095107", true, some( "3" ) ),
             deb( "1.2-3~20090423095107-3" ),
             pkg( "1.2-3-20090423095107-3" ),
-            rpm( "1.2_3", "0.1.20090423095107.3" ) );
+            rpm( "1.2_3", "1" ) );
     }
 
     public void testPrereleaseSnapshotWithoutRevision()
@@ -94,7 +94,7 @@ public class VersionTest
         verify( packageVersion( "1.2-rc1-SNAPSHOT", "20090423095107", true, some( "3" ) ),
             deb( "1.2~rc1~20090423095107-3" ),
             pkg( "1.2-rc1-20090423095107-3" ),
-            rpm( "1.2_rc1", "3" ) );
+            rpm( "1.2_rc1", "1" ) );
     }
 
     public void testPrereleaseSnapshotWithEmbeddedRevision()
@@ -110,7 +110,7 @@ public class VersionTest
         verify( packageVersion( "1.2-rc1-3-SNAPSHOT", "20090423095107", true, some( "3" ) ),
             deb( "1.2~rc1-3~20090423095107-3" ),
             pkg( "1.2-rc1-3-20090423095107-3" ),
-            rpm( "1.2_rc1_3", "3" ) );
+            rpm( "1.2_rc1_3", "1" ) );
     }
 
     // -----------------------------------------------------------------------
