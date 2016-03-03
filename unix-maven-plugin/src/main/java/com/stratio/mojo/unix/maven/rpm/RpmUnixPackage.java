@@ -47,6 +47,7 @@ import static org.codehaus.plexus.util.FileUtils.forceMkdir;
 import org.joda.time.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -114,14 +115,35 @@ public class RpmUnixPackage
 
     public void addDirectory(UnixFsObject.Directory directory)
             throws IOException {
-        specFile.addDirectory(directory);
-        fileCollector.addDirectory(directory);
+        if (!specFile.excludedSysPaths.contains(directory.path.asAbsolutePath("/"))) {
+            specFile.addDirectory(directory);
+            fileCollector.addDirectory(directory);
+        }
     }
 
     public void addFile(Fs<?> fromFile, RegularFile file)
             throws IOException {
-        specFile.addFile(file);
-        fileCollector.addFile(fromFile, file);
+        if (!specFile.excludedSysPaths.contains(file.path.asAbsolutePath("/"))) {
+            specFile.addFile(file);
+            fileCollector.addFile(fromFile, file);
+        } else if ("/RPM/conffiles".equals(file.path.asAbsolutePath("/"))) {
+            BufferedReader reader = null;
+            java.util.List <String> confFile = new java.util.ArrayList<String>();
+            try {
+                reader = new BufferedReader(new FileReader(((LocalFs) fromFile).file));
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    if (!"".equals(line.trim())) {
+                        confFile.add(line);
+                    }
+                }
+            } catch (IOException e) {
+            }
+
+            specFile.confFile = confFile;
+        }
     }
 
     public void addSymlink(UnixFsObject.Symlink symlink)
