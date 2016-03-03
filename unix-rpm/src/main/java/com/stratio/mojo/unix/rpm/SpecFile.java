@@ -96,6 +96,8 @@ public class SpecFile
 
     public File buildRoot;
 
+    public static java.util.List<String> confFile = new ArrayList<String>();
+
     public String buildArch;
 
     public String description;
@@ -119,6 +121,12 @@ public class SpecFile
 
     public void beforeAssembly( Directory defaultDirectory )
     {
+        excludedSysPaths.add("/DEBIAN");
+        excludedSysPaths.add("/DEBIAN/conffiles");
+        excludedSysPaths.add("/RPM");
+        excludedSysPaths.add("/RPM/conffiles");
+
+
         Validate.validateNotNull( defaultDirectory );
 
         Directory root = UnixFsObject.directory( BASE, fromDateFields( new Date( 0 ) ), EMPTY );
@@ -187,7 +195,9 @@ public class SpecFile
             add();
 
         spec.
-            add( "%files" ).
+            add( "%files" );
+
+        spec.
             addAllLines( fileSystem.prettify().toList().filter( excludePaths ).map( SpecFile.showUnixFsObject() ) );
 
         spec.addIf( includePre.isSome() || includePost.isSome() || includePreun.isSome() || includePostun.isSome(), "" );
@@ -232,6 +242,11 @@ public class SpecFile
 
                 s += formatTags.f( attributes.tags ).orSome( "" );
 
+                if (confFile.contains("/"+unixFsObject.path.toString()) &&
+                    (unixFsObject instanceof UnixFsObject.RegularFile || unixFsObject instanceof UnixFsObject.Symlink )) {
+                    s += "%config(noreplace) ";
+                }
+
                 s += "%attr(" +
                     attributes.mode.map( UnixFileMode.showOcalString ).orSome( "-" ) + "," +
                     attributes.user.orSome( "-" ) + "," +
@@ -243,7 +258,8 @@ public class SpecFile
                 }
                 s += unixFsObject.path.asAbsolutePath( "/" );
 
-                if ( unixFsObject instanceof UnixFsObject.RegularFile || unixFsObject instanceof UnixFsObject.Symlink )
+                if ( !ignorePath(unixFsObject.path.asAbsolutePath("/") +".*") &&
+                        (unixFsObject instanceof UnixFsObject.RegularFile || unixFsObject instanceof UnixFsObject.Symlink ))
                 {
                     return s;
                 }
@@ -251,8 +267,10 @@ public class SpecFile
                 {
                     return "%dir " + s;
                 }
-
-                throw error( "Unknown type UnixFsObject type: " + unixFsObject );
+                else {
+                    return "";
+                }
+//                throw error( "Unknown type UnixFsObject type: " + unixFsObject );
             }
 
             private boolean ignorePath(String s) {
