@@ -126,7 +126,7 @@ public class RpmUnixPackage
         if (!specFile.excludedSysPaths.contains(file.path.asAbsolutePath("/"))) {
             specFile.addFile(file);
             fileCollector.addFile(fromFile, file);
-        } else if ("/RPM/conffiles".equals(file.path.asAbsolutePath("/"))) {
+        } else if ("/DEBIAN/conffiles".equals(file.path.asAbsolutePath("/"))) {
             BufferedReader reader = null;
             java.util.List <String> confFile = new java.util.ArrayList<String>();
             try {

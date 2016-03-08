@@ -123,9 +123,6 @@ public class SpecFile
     {
         excludedSysPaths.add("/DEBIAN");
         excludedSysPaths.add("/DEBIAN/conffiles");
-        excludedSysPaths.add("/RPM");
-        excludedSysPaths.add("/RPM/conffiles");
-
 
         Validate.validateNotNull( defaultDirectory );
 
