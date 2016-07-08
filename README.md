@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/Stratio/unix-maven-plugin/badge.svg?branch=master)](https://coveralls.io/github/Stratio/unix-maven-plugin?branch=master)
+
 unix-maven-plugin
 =================
 
