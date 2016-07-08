@@ -2,7 +2,7 @@
 
 Only listing significant user-visible, not internal code cleanups and minor bug fixes. 
 
-## 1.2.0 (upcoming)
+## 1.3.0 (upcoming)
 
 * TBD
 
