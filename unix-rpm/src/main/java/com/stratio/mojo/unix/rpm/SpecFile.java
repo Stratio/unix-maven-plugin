@@ -179,6 +179,24 @@ public class SpecFile
             spec.add( "%define " + defineStatement );
         }
 
+        // Ref: http://blog.agilepartner.net/building-rpm-packages-2/         
+        // In recent versions of rpmbuild, 2 steps are automatically added by rpm builds when a package contains Java code or bytecode: jars repack, and automatic creation of Require and Provides attributes for OSGi-based jars.
+        // Jars repack is a very long process for very little gain. It is initially meant to eliminate multilib conflicts, so should be avoided in most cases, and used if your jars provides arch-dependent libs (which could cause conflicts), which is quite rare.
+        // It is avoided by adding the following definition in your spec file:
+        spec.add( "%define __jar_repack %{nil}" );
+
+        // Ref: http://blog.agilepartner.net/building-rpm-packages-2/         
+        // As for Automatic osgi Requires and Provides, it is altogether tedious, long, and just wrong in 99% of cases.
+        // For example Tomcat ends up “providing” (as an RPM package) log4j in a given version, and requiring some other OSGi bundle libraries (as of some OSGi manifests found in the jars).
+        // This will likely prevent installation or create unforeseen conflicts, in a weird context, because a JVM sets its classpath when it is started, not at installation time…
+        // Moreover OSGi are not static or dynamic bindings such as the ones of C/C++ libraries, and their loading is even more dynamic than the loading of regular java files.
+        // It may make some sense for some GCJ packaging corner-cases, but won’t for most java-based software out there.
+        // In order to deactivate it, one must turn off automatic Require and Provides discovery:
+        spec.add( "AutoReqProv: no" );
+
+        // Kenneth Skaar proposes that we use the following instead (not tested)
+        // spec.add( "%define __requires_exclude ^osgi.*$" );
+        
         UnixUtil.assertField("version", version);
         UnixUtil.assertField("release", release);
 
