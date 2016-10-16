@@ -70,6 +70,8 @@ public class SpecFileTest
     {
         header = new LineFile();
         header.
+            add( "%define __jar_repack %{nil}" ).
+            add( "AutoReqProv: no" ).
             add( "Name: groupid-artifactid" ).
             add( "Version: 1.0" ).
             add( "Release: 1" ).
