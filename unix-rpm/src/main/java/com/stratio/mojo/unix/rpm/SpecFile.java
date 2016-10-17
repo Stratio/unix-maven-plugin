@@ -179,6 +179,10 @@ public class SpecFile
             spec.add( "%define " + defineStatement );
         }
 
+        // Resolve issue with OSGI dependencies: http://blog.agilepartner.net/building-rpm-packages-2/         
+        spec.add( "%define __jar_repack %{nil}" );
+        spec.add( "AutoReqProv: no" );
+
         UnixUtil.assertField("version", version);
         UnixUtil.assertField("release", release);
 
